@@ -29,7 +29,7 @@ export default function ExperimentForm({ experiment, onClose, onSave }: Experime
     notes: experiment?.notes || ''
   })
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     
     const experimentData: Experiment = {
@@ -38,13 +38,17 @@ export default function ExperimentForm({ experiment, onClose, onSave }: Experime
       ...formData
     }
 
-    if (experiment) {
-      updateExperiment(experiment.id, experimentData)
-    } else {
-      addExperiment(experimentData)
+    try {
+      if (experiment) {
+        await updateExperiment(experiment.id, experimentData)
+      } else {
+        await addExperiment(experimentData)
+      }
+      onSave()
+    } catch (error) {
+      console.error('Failed to save experiment:', error)
+      alert('実験データの保存に失敗しました')
     }
-
-    onSave()
   }
 
   return (

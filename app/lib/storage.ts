@@ -1,18 +1,35 @@
 import { Phase, Task, Experiment, Progress } from './types'
 import { learningPhases } from './learningData'
+import { cloudStorage } from './cloudStorage'
 
-const STORAGE_KEY = 'rpi-learning-progress'
-const EXPERIMENTS_KEY = 'rpi-experiments'
+// クラウド同期対応のストレージ関数
+export async function saveProgress(phases: Phase[]): Promise<void> {
+  await cloudStorage.saveProgress(phases)
+}
 
-export function saveProgress(phases: Phase[]): void {
+export async function loadProgress(): Promise<Phase[]> {
+  const data = await cloudStorage.loadProgress()
+  return data.length > 0 ? data : learningPhases
+}
+
+export async function saveExperiments(experiments: Experiment[]): Promise<void> {
+  await cloudStorage.saveExperiments(experiments)
+}
+
+export async function loadExperiments(): Promise<Experiment[]> {
+  return await cloudStorage.loadExperiments()
+}
+
+// 既存の関数は同期版として保持（下位互換性）
+export function saveProgressSync(phases: Phase[]): void {
   if (typeof window !== 'undefined') {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(phases))
+    localStorage.setItem('rpi-learning-progress', JSON.stringify(phases))
   }
 }
 
-export function loadProgress(): Phase[] {
+export function loadProgressSync(): Phase[] {
   if (typeof window !== 'undefined') {
-    const saved = localStorage.getItem(STORAGE_KEY)
+    const saved = localStorage.getItem('rpi-learning-progress')
     if (saved) {
       try {
         return JSON.parse(saved)
@@ -22,26 +39,6 @@ export function loadProgress(): Phase[] {
     }
   }
   return learningPhases
-}
-
-export function saveExperiments(experiments: Experiment[]): void {
-  if (typeof window !== 'undefined') {
-    localStorage.setItem(EXPERIMENTS_KEY, JSON.stringify(experiments))
-  }
-}
-
-export function loadExperiments(): Experiment[] {
-  if (typeof window !== 'undefined') {
-    const saved = localStorage.getItem(EXPERIMENTS_KEY)
-    if (saved) {
-      try {
-        return JSON.parse(saved)
-      } catch (e) {
-        console.error('Failed to parse saved experiments:', e)
-      }
-    }
-  }
-  return []
 }
 
 export function updateTaskStatus(phases: Phase[], taskId: string, completed: boolean): Phase[] {
@@ -55,24 +52,24 @@ export function updateTaskStatus(phases: Phase[], taskId: string, completed: boo
   }))
 }
 
-export function addExperiment(experiment: Experiment): void {
-  const experiments = loadExperiments()
+export async function addExperiment(experiment: Experiment): Promise<void> {
+  const experiments = await loadExperiments()
   experiments.push(experiment)
-  saveExperiments(experiments)
+  await saveExperiments(experiments)
 }
 
-export function deleteExperiment(experimentId: string): void {
-  const experiments = loadExperiments()
+export async function deleteExperiment(experimentId: string): Promise<void> {
+  const experiments = await loadExperiments()
   const filtered = experiments.filter(exp => exp.id !== experimentId)
-  saveExperiments(filtered)
+  await saveExperiments(filtered)
 }
 
-export function updateExperiment(experimentId: string, updates: Partial<Experiment>): void {
-  const experiments = loadExperiments()
+export async function updateExperiment(experimentId: string, updates: Partial<Experiment>): Promise<void> {
+  const experiments = await loadExperiments()
   const updated = experiments.map(exp => 
     exp.id === experimentId ? { ...exp, ...updates } : exp
   )
-  saveExperiments(updated)
+  await saveExperiments(updated)
 }
 
 export function addTaskToPhase(phases: Phase[], phaseId: string, task: Task): Phase[] {

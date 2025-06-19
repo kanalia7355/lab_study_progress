@@ -17,10 +17,15 @@ export default function ExperimentList({ experiments }: ExperimentListProps) {
   const [editingExperiment, setEditingExperiment] = useState<Experiment | null>(null)
   const [showCharts, setShowCharts] = useState(false)
 
-  const handleDelete = (id: string) => {
+  const handleDelete = async (id: string) => {
     if (confirm('この実験結果を削除しますか？')) {
-      deleteExp(id)
-      window.location.reload()
+      try {
+        await deleteExp(id)
+        window.location.reload()
+      } catch (error) {
+        console.error('Failed to delete experiment:', error)
+        alert('実験データの削除に失敗しました')
+      }
     }
   }
 

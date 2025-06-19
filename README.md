@@ -13,15 +13,20 @@
 - 🤖 **AI自動タスク生成（Gemini API）**
 - 📄 Markdownファイルからのタスク抽出
 - ✍️ メモからのタスク自動生成
+- ☁️ **デバイス間リアルタイム同期（Supabase）**
+- 🔐 シンプル認証システム
+- 📱 オフライン対応と自動復旧
 
 ## 技術スタック
 
-- Next.js 15
-- React 19
+- Next.js 13.5
+- React 18
 - TypeScript
 - Tailwind CSS
+- Supabase (認証・データベース)
 - Recharts (データ可視化)
 - Lucide React (アイコン)
+- Google Generative AI (Gemini)
 
 ## セットアップ
 
@@ -48,7 +53,19 @@ AI自動タスク生成機能を使用するには、Google Gemini APIキーが�
    ```
    GEMINI_API_KEY=your_actual_api_key_here
    ```
-3. サーバーを再起動
+
+### デバイス間同期の設定
+
+デバイス間でデータを同期するには、Supabaseの設定が必要です：
+
+1. [Supabase](https://supabase.com) でプロジェクトを作成
+2. SQL Editorで `supabase-schema.sql` を実行
+3. `.env.local` に設定を追加：
+   ```
+   NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
+   NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+   ```
+4. サーバーを再起動
 
 ## デプロイ
 
@@ -92,6 +109,13 @@ vercel
 - ✏️ **編集**: タスクカードの編集ボタンで内容修正
 - 🗑️ **削除**: タスクカードの削除ボタンで不要なタスクを削除
 - ✅ **完了**: チェックボックスで完了状態を管理
+
+### デバイス間同期
+- 🔐 **ログイン**: 右上のログインボタンからアカウント作成・ログイン
+- ☁️ **自動同期**: ログイン状態でタスクや実験データが自動同期
+- 📱 **複数デバイス**: PC、タブレット、スマホで同じデータにアクセス
+- 🔄 **リアルタイム**: データ変更が即座に他デバイスに反映
+- 📶 **オフライン対応**: インターネット接続復旧時に自動同期
 
 ## プロジェクト構造
 
