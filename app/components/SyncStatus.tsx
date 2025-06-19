@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import { Cloud, CloudOff, Wifi, WifiOff, RefreshCw, User, LogOut } from 'lucide-react'
 import { cloudStorage } from '@/app/lib/cloudStorage'
 import { getCurrentUser, signOut } from '@/app/lib/supabase'
+import ThemeToggle from './ThemeToggle'
 
 interface SyncStatusProps {
   onAuthRequired: () => void
@@ -80,11 +81,16 @@ export default function SyncStatus({ onAuthRequired }: SyncStatusProps) {
   }
 
   return (
-    <div className="flex items-center space-x-4">
+    <div className="flex items-center gap-4">
+      {/* テーマ切り替え */}
+      <ThemeToggle />
+
       {/* 同期状態 */}
-      <div className={`flex items-center space-x-2 ${getSyncColor()}`}>
-        {getSyncIcon()}
-        <span className="text-sm font-medium">{getSyncText()}</span>
+      <div className="glass rounded-xl px-4 py-2 border border-white/20">
+        <div className={`flex items-center gap-2 ${getSyncColor()}`}>
+          {getSyncIcon()}
+          <span className="text-sm font-medium">{getSyncText()}</span>
+        </div>
       </div>
 
       {/* 手動同期ボタン */}
@@ -92,7 +98,7 @@ export default function SyncStatus({ onAuthRequired }: SyncStatusProps) {
         <button
           onClick={handleForceSync}
           disabled={isRefreshing || !syncStatus.isOnline}
-          className="flex items-center space-x-1 px-3 py-1 text-sm bg-blue-100 text-blue-700 rounded-full hover:bg-blue-200 disabled:opacity-50 disabled:cursor-not-allowed"
+          className="btn-secondary flex items-center gap-2 text-sm disabled:opacity-50 disabled:cursor-not-allowed"
         >
           <RefreshCw className={`w-3 h-3 ${isRefreshing ? 'animate-spin' : ''}`} />
           <span>同期</span>
@@ -100,27 +106,29 @@ export default function SyncStatus({ onAuthRequired }: SyncStatusProps) {
       )}
 
       {/* ユーザー情報 */}
-      <div className="flex items-center space-x-2">
+      <div className="glass rounded-xl border border-white/20">
         {user ? (
-          <div className="flex items-center space-x-2">
-            <div className="flex items-center space-x-1 text-sm text-gray-600">
-              <User className="w-4 h-4" />
-              <span className="max-w-32 truncate">{user.email}</span>
+          <div className="flex items-center gap-3 px-4 py-2">
+            <div className="flex items-center gap-2 text-sm text-neutral-700 dark:text-neutral-300">
+              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary-500 to-accent-500 flex items-center justify-center">
+                <User className="w-4 h-4 text-white" />
+              </div>
+              <span className="max-w-32 truncate font-medium">{user.email}</span>
             </div>
             <button
               onClick={handleSignOut}
-              className="p-1 hover:bg-gray-100 rounded"
+              className="p-2 hover:bg-error-100 dark:hover:bg-error-900/20 rounded-lg text-error-600 transition-all duration-300 hover:scale-110"
               title="ログアウト"
             >
-              <LogOut className="w-4 h-4 text-gray-500" />
+              <LogOut className="w-4 h-4" />
             </button>
           </div>
         ) : (
           <button
             onClick={onAuthRequired}
-            className="flex items-center space-x-1 px-3 py-1 text-sm bg-blue-600 text-white rounded-full hover:bg-blue-700"
+            className="btn-primary flex items-center gap-2 text-sm px-4 py-2"
           >
-            <User className="w-3 h-3" />
+            <User className="w-4 h-4" />
             <span>ログイン</span>
           </button>
         )}
