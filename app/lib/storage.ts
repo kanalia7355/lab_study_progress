@@ -1,4 +1,4 @@
-import { Phase, Experiment, Progress } from './types'
+import { Phase, Task, Experiment, Progress } from './types'
 import { learningPhases } from './learningData'
 
 const STORAGE_KEY = 'rpi-learning-progress'
@@ -73,4 +73,32 @@ export function updateExperiment(experimentId: string, updates: Partial<Experime
     exp.id === experimentId ? { ...exp, ...updates } : exp
   )
   saveExperiments(updated)
+}
+
+export function addTaskToPhase(phases: Phase[], phaseId: string, task: Task): Phase[] {
+  return phases.map(phase => 
+    phase.id === phaseId 
+      ? { ...phase, tasks: [...phase.tasks, task] }
+      : phase
+  )
+}
+
+export function addCustomPhase(phases: Phase[], newPhase: Phase): Phase[] {
+  return [...phases, newPhase]
+}
+
+export function deleteTask(phases: Phase[], taskId: string): Phase[] {
+  return phases.map(phase => ({
+    ...phase,
+    tasks: phase.tasks.filter(task => task.id !== taskId)
+  }))
+}
+
+export function updateTask(phases: Phase[], taskId: string, updates: Partial<Task>): Phase[] {
+  return phases.map(phase => ({
+    ...phase,
+    tasks: phase.tasks.map(task => 
+      task.id === taskId ? { ...task, ...updates } : task
+    )
+  }))
 }

@@ -1,15 +1,18 @@
 'use client'
 
 import { useState } from 'react'
-import { Check, ChevronDown, ChevronUp, Code } from 'lucide-react'
+import { Check, ChevronDown, ChevronUp, Code, Edit, Trash2 } from 'lucide-react'
 import { Task } from '@/app/lib/types'
 
 interface TaskCardProps {
   task: Task
+  phaseId: string
   onToggle: (taskId: string, completed: boolean) => void
+  onEdit?: (task: Task, phaseId: string) => void
+  onDelete?: (taskId: string) => void
 }
 
-export default function TaskCard({ task, onToggle }: TaskCardProps) {
+export default function TaskCard({ task, phaseId, onToggle, onEdit, onDelete }: TaskCardProps) {
   const [expanded, setExpanded] = useState(false)
 
   const categoryColors = {
@@ -55,14 +58,35 @@ export default function TaskCard({ task, onToggle }: TaskCardProps) {
             </div>
           </div>
         </div>
-        {task.codeSnippet && (
-          <button
-            onClick={() => setExpanded(!expanded)}
-            className="ml-2 p-1 hover:bg-gray-100 dark:hover:bg-gray-700 rounded"
-          >
-            {expanded ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
-          </button>
-        )}
+        <div className="flex items-center space-x-1 ml-2">
+          {onEdit && (
+            <button
+              onClick={() => onEdit(task, phaseId)}
+              className="p-1 hover:bg-blue-100 dark:hover:bg-blue-900 rounded text-blue-600"
+              title="タスクを編集"
+            >
+              <Edit size={16} />
+            </button>
+          )}
+          {onDelete && (
+            <button
+              onClick={() => onDelete(task.id)}
+              className="p-1 hover:bg-red-100 dark:hover:bg-red-900 rounded text-red-600"
+              title="タスクを削除"
+            >
+              <Trash2 size={16} />
+            </button>
+          )}
+          {task.codeSnippet && (
+            <button
+              onClick={() => setExpanded(!expanded)}
+              className="p-1 hover:bg-gray-100 dark:hover:bg-gray-700 rounded"
+              title="コードを表示/非表示"
+            >
+              {expanded ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+            </button>
+          )}
+        </div>
       </div>
       
       {expanded && task.codeSnippet && (

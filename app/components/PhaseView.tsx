@@ -8,9 +8,11 @@ import { CheckCircle } from 'lucide-react'
 interface PhaseViewProps {
   phase: Phase
   onTaskToggle: (taskId: string, completed: boolean) => void
+  onTaskEdit?: (task: any, phaseId: string) => void
+  onTaskDelete?: (taskId: string) => void
 }
 
-export default function PhaseView({ phase, onTaskToggle }: PhaseViewProps) {
+export default function PhaseView({ phase, onTaskToggle, onTaskEdit, onTaskDelete }: PhaseViewProps) {
   const completedTasks = phase.tasks.filter(task => task.completed).length
   const progress = (completedTasks / phase.tasks.length) * 100
 
@@ -39,7 +41,10 @@ export default function PhaseView({ phase, onTaskToggle }: PhaseViewProps) {
           <TaskCard 
             key={task.id} 
             task={task} 
+            phaseId={phase.id}
             onToggle={onTaskToggle}
+            onEdit={onTaskEdit}
+            onDelete={onTaskDelete}
           />
         ))}
       </div>

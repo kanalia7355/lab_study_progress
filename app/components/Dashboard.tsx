@@ -6,18 +6,26 @@ import {
   loadProgress, 
   saveProgress, 
   updateTaskStatus,
-  loadExperiments 
+  loadExperiments,
+  addTaskToPhase,
+  updateTask,
+  deleteTask
 } from '@/app/lib/storage'
 import { getCompletedTasks, getTotalTasks, getCurrentPhase } from '@/app/lib/learningData'
 import PhaseView from './PhaseView'
 import ProgressBar from './ProgressBar'
 import ExperimentList from './ExperimentList'
-import { Calendar, Target, Zap, Brain } from 'lucide-react'
+import TaskForm from './TaskForm'
+import AITaskGenerator from './AITaskGenerator'
+import { Calendar, Target, Zap, Brain, Plus, FileText } from 'lucide-react'
 
 export default function Dashboard() {
   const [phases, setPhases] = useState<Phase[]>([])
   const [experiments, setExperiments] = useState<Experiment[]>([])
   const [activeTab, setActiveTab] = useState<'progress' | 'experiments'>('progress')
+  const [showTaskForm, setShowTaskForm] = useState(false)
+  const [showAIGenerator, setShowAIGenerator] = useState(false)
+  const [editingTask, setEditingTask] = useState<{ task: any; phaseId: string } | null>(null)
 
   useEffect(() => {
     setPhases(loadProgress())
@@ -26,6 +34,42 @@ export default function Dashboard() {
 
   const handleTaskToggle = (taskId: string, completed: boolean) => {
     const updatedPhases = updateTaskStatus(phases, taskId, completed)
+    setPhases(updatedPhases)
+    saveProgress(updatedPhases)
+  }
+
+  const handleAddTask = (phaseId: string, task: any) => {
+    let updatedPhases
+    if (editingTask) {
+      // 編集モード
+      updatedPhases = updateTask(phases, editingTask.task.id, task)
+    } else {
+      // 新規追加モード
+      updatedPhases = addTaskToPhase(phases, phaseId, task)
+    }
+    setPhases(updatedPhases)
+    saveProgress(updatedPhases)
+    setEditingTask(null)
+  }
+
+  const handleEditTask = (task: any, phaseId: string) => {
+    setEditingTask({ task, phaseId })
+    setShowTaskForm(true)
+  }
+
+  const handleDeleteTask = (taskId: string) => {
+    if (confirm('このタスクを削除しますか？')) {
+      const updatedPhases = deleteTask(phases, taskId)
+      setPhases(updatedPhases)
+      saveProgress(updatedPhases)
+    }
+  }
+
+  const handleAITasksGenerated = (tasks: any[], phaseId: string) => {
+    let updatedPhases = phases
+    tasks.forEach(task => {
+      updatedPhases = addTaskToPhase(updatedPhases, phaseId, task)
+    })
     setPhases(updatedPhases)
     saveProgress(updatedPhases)
   }
@@ -98,28 +142,52 @@ export default function Dashboard() {
 
       <div className="mb-6">
         <div className="border-b border-gray-200 dark:border-gray-700">
-          <nav className="-mb-px flex space-x-8">
-            <button
-              onClick={() => setActiveTab('progress')}
-              className={`py-2 px-1 border-b-2 font-medium text-sm ${
-                activeTab === 'progress'
-                  ? 'border-blue-500 text-blue-600'
-                  : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
-              }`}
-            >
-              学習進捗
-            </button>
-            <button
-              onClick={() => setActiveTab('experiments')}
-              className={`py-2 px-1 border-b-2 font-medium text-sm ${
-                activeTab === 'experiments'
-                  ? 'border-blue-500 text-blue-600'
-                  : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
-              }`}
-            >
-              実験結果
-            </button>
-          </nav>
+          <div className="flex justify-between items-center">
+            <nav className="-mb-px flex space-x-8">
+              <button
+                onClick={() => setActiveTab('progress')}
+                className={`py-2 px-1 border-b-2 font-medium text-sm ${
+                  activeTab === 'progress'
+                    ? 'border-blue-500 text-blue-600'
+                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                }`}
+              >
+                学習進捗
+              </button>
+              <button
+                onClick={() => setActiveTab('experiments')}
+                className={`py-2 px-1 border-b-2 font-medium text-sm ${
+                  activeTab === 'experiments'
+                    ? 'border-blue-500 text-blue-600'
+                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                }`}
+              >
+                実験結果
+              </button>
+            </nav>
+            
+            {activeTab === 'progress' && (
+              <div className="flex space-x-2 mb-2">
+                <button
+                  onClick={() => {
+                    setEditingTask(null)
+                    setShowTaskForm(true)
+                  }}
+                  className="flex items-center space-x-2 bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors text-sm"
+                >
+                  <Plus className="w-4 h-4" />
+                  <span>新規タスク</span>
+                </button>
+                <button
+                  onClick={() => setShowAIGenerator(true)}
+                  className="flex items-center space-x-2 bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition-colors text-sm"
+                >
+                  <FileText className="w-4 h-4" />
+                  <span>AI生成</span>
+                </button>
+              </div>
+            )}
+          </div>
         </div>
       </div>
 
@@ -130,11 +198,33 @@ export default function Dashboard() {
               key={phase.id} 
               phase={phase} 
               onTaskToggle={handleTaskToggle}
+              onTaskEdit={handleEditTask}
+              onTaskDelete={handleDeleteTask}
             />
           ))}
         </div>
       ) : (
         <ExperimentList experiments={experiments} />
+      )}
+
+      {showTaskForm && (
+        <TaskForm
+          phases={phases}
+          onClose={() => {
+            setShowTaskForm(false)
+            setEditingTask(null)
+          }}
+          onSave={handleAddTask}
+          editingTask={editingTask}
+        />
+      )}
+
+      {showAIGenerator && (
+        <AITaskGenerator
+          phases={phases}
+          onClose={() => setShowAIGenerator(false)}
+          onTasksGenerated={handleAITasksGenerated}
+        />
       )}
     </div>
   )
