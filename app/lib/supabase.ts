@@ -3,6 +3,11 @@ import { createClient } from '@supabase/supabase-js'
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
 
+console.log('Supabase設定:', { 
+  url: supabaseUrl?.substring(0, 30) + '...', 
+  hasKey: !!supabaseAnonKey 
+})
+
 if (!supabaseUrl || !supabaseAnonKey) {
   console.error('Supabase環境変数が設定されていません')
   throw new Error('Supabase環境変数が設定されていません。.env.localファイルを確認してください。')
@@ -46,19 +51,33 @@ export const getCurrentUser = async () => {
 }
 
 export const signInWithPassword = async (email: string, password: string) => {
-  const { data, error } = await supabase.auth.signInWithPassword({
-    email,
-    password,
-  })
-  return { data, error }
+  try {
+    console.log('signInWithPassword呼び出し:', { email })
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    })
+    console.log('signInWithPassword結果:', { data: !!data, error })
+    return { data, error }
+  } catch (err) {
+    console.error('signInWithPasswordエラー:', err)
+    throw err
+  }
 }
 
 export const signUp = async (email: string, password: string) => {
-  const { data, error } = await supabase.auth.signUp({
-    email,
-    password,
-  })
-  return { data, error }
+  try {
+    console.log('signUp呼び出し:', { email })
+    const { data, error } = await supabase.auth.signUp({
+      email,
+      password,
+    })
+    console.log('signUp結果:', { data: !!data, error })
+    return { data, error }
+  } catch (err) {
+    console.error('signUpエラー:', err)
+    throw err
+  }
 }
 
 export const signOut = async () => {

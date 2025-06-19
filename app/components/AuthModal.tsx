@@ -27,6 +27,7 @@ export default function AuthModal({ onClose, onSuccess }: AuthModalProps) {
     setError('')
 
     try {
+      console.log('認証開始:', { mode, email })
       let result
       if (mode === 'signin') {
         result = await signInWithPassword(email, password)
@@ -34,7 +35,10 @@ export default function AuthModal({ onClose, onSuccess }: AuthModalProps) {
         result = await signUp(email, password)
       }
 
+      console.log('認証結果:', result)
+
       if (result.error) {
+        console.error('認証エラー:', result.error)
         setError(result.error.message)
       } else {
         if (mode === 'signup' && !result.data.user?.email_confirmed_at) {
@@ -44,7 +48,8 @@ export default function AuthModal({ onClose, onSuccess }: AuthModalProps) {
         }
       }
     } catch (err) {
-      setError('認証に失敗しました')
+      console.error('認証例外:', err)
+      setError(`認証に失敗しました: ${err instanceof Error ? err.message : 'Unknown error'}`)
     } finally {
       setIsLoading(false)
     }
