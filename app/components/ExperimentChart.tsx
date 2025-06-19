@@ -1,15 +1,8 @@
 'use client'
 
 import { Experiment } from '@/app/lib/types'
+import { formatChartDate } from '@/app/lib/utils'
 import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts'
-
-// Date formatting utility
-const formatChartDate = (date: Date) => {
-  return new Date(date).toLocaleDateString('ja-JP', {
-    month: '2-digit',
-    day: '2-digit'
-  })
-}
 
 interface ExperimentChartProps {
   experiments: Experiment[]

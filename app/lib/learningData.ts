@@ -178,11 +178,18 @@ export function getCompletedTasks(phases: Phase[]): number {
 }
 
 export function getCurrentPhase(phases: Phase[]): string {
+  if (!phases || phases.length === 0) {
+    return '環境構築・基本動作'
+  }
+  
   for (const phase of phases) {
-    const incompleteTasks = phase.tasks.filter(task => !task.completed)
+    if (!phase || !phase.tasks) continue
+    const incompleteTasks = phase.tasks.filter(task => task && !task.completed)
     if (incompleteTasks.length > 0) {
-      return phase.name
+      return phase.name || '未定義'
     }
   }
-  return phases[phases.length - 1].name
+  
+  const lastPhase = phases[phases.length - 1]
+  return lastPhase?.name || '完了'
 }

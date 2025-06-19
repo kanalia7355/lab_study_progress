@@ -30,9 +30,9 @@ export default function Dashboard() {
     saveProgress(updatedPhases)
   }
 
-  const completedTasks = getCompletedTasks(phases)
+  const completedTasks = phases.length > 0 ? getCompletedTasks(phases) : 0
   const totalTasks = getTotalTasks()
-  const overallProgress = (completedTasks / totalTasks) * 100
+  const overallProgress = totalTasks > 0 ? (completedTasks / totalTasks) * 100 : 0
   const currentPhase = getCurrentPhase(phases)
 
   return (

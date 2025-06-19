@@ -2,15 +2,7 @@
 
 import { useState } from 'react'
 import { Experiment } from '@/app/lib/types'
-// Date formatting utility
-const formatDate = (date: Date) => {
-  return new Date(date).toLocaleDateString('ja-JP', {
-    month: '2-digit',
-    day: '2-digit',
-    hour: '2-digit',
-    minute: '2-digit'
-  })
-}
+import { formatDate } from '@/app/lib/utils'
 import { Plus, Trash2, Edit, BarChart3 } from 'lucide-react'
 import ExperimentForm from './ExperimentForm'
 import ExperimentChart from './ExperimentChart'
