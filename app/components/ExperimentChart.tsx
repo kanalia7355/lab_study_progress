@@ -2,7 +2,14 @@
 
 import { Experiment } from '@/app/lib/types'
 import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts'
-import { format } from 'date-fns'
+
+// Date formatting utility
+const formatChartDate = (date: Date) => {
+  return new Date(date).toLocaleDateString('ja-JP', {
+    month: '2-digit',
+    day: '2-digit'
+  })
+}
 
 interface ExperimentChartProps {
   experiments: Experiment[]
@@ -15,7 +22,7 @@ export default function ExperimentChart({ experiments, chartType }: ExperimentCh
   const sortedData = [...experiments]
     .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
     .map(exp => ({
-      date: format(new Date(exp.date), 'MM/dd'),
+      date: formatChartDate(exp.date),
       name: exp.name,
       fps: exp.avgFps,
       inference: exp.avgInferenceTime * 1000, // ms

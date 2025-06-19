@@ -2,8 +2,15 @@
 
 import { useState } from 'react'
 import { Experiment } from '@/app/lib/types'
-import { format } from 'date-fns'
-import { ja } from 'date-fns/locale'
+// Date formatting utility
+const formatDate = (date: Date) => {
+  return new Date(date).toLocaleDateString('ja-JP', {
+    month: '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit'
+  })
+}
 import { Plus, Trash2, Edit, BarChart3 } from 'lucide-react'
 import ExperimentForm from './ExperimentForm'
 import ExperimentChart from './ExperimentChart'
@@ -105,7 +112,7 @@ export default function ExperimentList({ experiments }: ExperimentListProps) {
                     <div>
                       <p className="text-sm text-gray-600 dark:text-gray-400">日時</p>
                       <p className="font-medium">
-                        {format(new Date(experiment.date), 'MM/dd HH:mm', { locale: ja })}
+                        {formatDate(experiment.date)}
                       </p>
                     </div>
                     <div>
