@@ -7,11 +7,11 @@
   /* シンプルで読みやすいカラーパレット */
   --primary-50: #eff6ff;
   --primary-100: #dbeafe;
-  --primary-500: #3b82f6;
-  --primary-600: #2563eb;
-  --primary-700: #1d4ed8;
-  --primary-800: #1e40af;
-  --primary-900: #1e3a8a;
+  --primary-500: #0066ff; /* 蛍光青 */
+  --primary-600: #0055ff; /* 蛍光青 */
+  --primary-700: #0044ff; /* 蛍光青 */
+  --primary-800: #0033ff; /* 蛍光青 */
+  --primary-900: #0022ff; /* 蛍光青 */
   
   --accent-50: #fdf4ff;
   --accent-100: #fae8ff;
@@ -40,12 +40,12 @@
   --neutral-100: #f5f5f5;
   --neutral-200: #e5e5e5;
   --neutral-300: #d4d4d4;
-  --neutral-400: #a3a3a3;
-  --neutral-500: #737373;
-  --neutral-600: #525252;
-  --neutral-700: #404040;
+  --neutral-400: #000000; /* 黒色に変更 */
+  --neutral-500: #000000; /* 黒色に変更 */
+  --neutral-600: #000000; /* 黒色に変更 */
+  --neutral-700: #000000; /* 黒色に変更 */
   --neutral-800: #262626;
-  --neutral-900: #171717;
+  --neutral-900: #000000; /* 濃い黒色に変更 */
   
   /* シンプルなグラデーション */
   --gradient-primary: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
@@ -84,7 +84,7 @@ body {
 body {
   background: #ffffff;
   min-height: 100vh;
-  color: var(--neutral-900);
+  color: #000000; /* 黒色に変更 */
 }
 
 /* Dark mode styles */

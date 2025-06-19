@@ -108,9 +108,9 @@ export default function Dashboard() {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
-          <div className="w-16 h-16 border-4 border-gray-200 border-t-blue-600 rounded-full animate-spin mx-auto mb-4"></div>
-          <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-2">Loading...</h2>
-          <p className="text-gray-600 dark:text-gray-400">データを読み込み中</p>
+          <div className="w-16 h-16 border-4 border-gray-200 rounded-full animate-spin mx-auto mb-4" style={{borderTopColor: '#0066ff'}}></div>
+          <h2 className="text-xl font-semibold text-black mb-2">Loading...</h2>
+          <p className="text-black">データを読み込み中</p>
         </div>
       </div>
     )
@@ -124,10 +124,10 @@ export default function Dashboard() {
           <div className="card">
             <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6">
               <div>
-                <h1 className="text-3xl lg:text-4xl font-bold text-gray-900 dark:text-gray-100 mb-2">
+                <h1 className="text-3xl lg:text-4xl font-bold text-black mb-2">
                   RPI4 YOLO最適化学習進捗トラッカー
                 </h1>
-                <p className="text-gray-600 dark:text-gray-400 text-lg">
+                <p className="text-black text-lg">
                   ラズパイ4でのYOLO最適化を遺伝的アルゴリズムで実現する学習プログラム
                 </p>
               </div>
@@ -141,17 +141,17 @@ export default function Dashboard() {
           <div className="card">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-gray-600 dark:text-gray-400">全体進捗</p>
-                <p className="text-2xl font-bold text-blue-600">{Math.round(overallProgress)}%</p>
+                <p className="text-sm text-black font-semibold">全体進捗</p>
+                <p className="text-2xl font-bold" style={{color: '#0066ff'}}>{Math.round(overallProgress)}%</p>
               </div>
-              <Target className="w-8 h-8 text-blue-600" />
+              <Target className="w-8 h-8" style={{color: '#0066ff'}} />
             </div>
           </div>
           
           <div className="card">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-gray-600 dark:text-gray-400">完了タスク</p>
+                <p className="text-sm text-black font-semibold">完了タスク</p>
                 <p className="text-2xl font-bold text-green-600">{completedTasks}/{totalTasks}</p>
               </div>
               <Calendar className="w-8 h-8 text-green-600" />
@@ -161,7 +161,7 @@ export default function Dashboard() {
           <div className="card">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-gray-600 dark:text-gray-400">現在のフェーズ</p>
+                <p className="text-sm text-black font-semibold">現在のフェーズ</p>
                 <p className="text-lg font-semibold text-purple-600 truncate">{currentPhase}</p>
               </div>
               <Zap className="w-8 h-8 text-purple-600" />
@@ -171,7 +171,7 @@ export default function Dashboard() {
           <div className="card">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-gray-600 dark:text-gray-400">実験数</p>
+                <p className="text-sm text-black font-semibold">実験数</p>
                 <p className="text-2xl font-bold text-orange-600">{experiments.length}</p>
               </div>
               <Brain className="w-8 h-8 text-orange-600" />
@@ -183,8 +183,8 @@ export default function Dashboard() {
         <div className="mb-8">
           <div className="card">
             <div className="flex items-center justify-between mb-3">
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">総合進捗</h3>
-              <span className="text-sm text-gray-600 dark:text-gray-400">{completedTasks}/{totalTasks} タスク完了</span>
+              <h3 className="text-lg font-semibold text-black">総合進捗</h3>
+              <span className="text-sm text-black font-semibold">{completedTasks}/{totalTasks} タスク完了</span>
             </div>
             <ProgressBar 
               progress={overallProgress} 
@@ -203,9 +203,10 @@ export default function Dashboard() {
                   onClick={() => setActiveTab('progress')}
                   className={`px-4 py-2 rounded-lg font-semibold transition-colors duration-200 ${
                     activeTab === 'progress'
-                      ? 'bg-blue-600 text-white'
-                      : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
+                      ? 'text-white'
+                      : 'text-black hover:text-black hover:bg-gray-100'
                   }`}
+                  style={activeTab === 'progress' ? {backgroundColor: '#0066ff'} : {}}
                 >
                   <div className="flex items-center gap-2">
                     <Target className="w-4 h-4" />
@@ -216,9 +217,10 @@ export default function Dashboard() {
                   onClick={() => setActiveTab('experiments')}
                   className={`px-4 py-2 rounded-lg font-semibold transition-colors duration-200 ${
                     activeTab === 'experiments'
-                      ? 'bg-blue-600 text-white'
-                      : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
+                      ? 'text-white'
+                      : 'text-black hover:text-black hover:bg-gray-100'
                   }`}
+                  style={activeTab === 'experiments' ? {backgroundColor: '#0066ff'} : {}}
                 >
                   <div className="flex items-center gap-2">
                     <BarChart3 className="w-4 h-4" />
