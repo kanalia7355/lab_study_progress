@@ -124,53 +124,83 @@ export default function Dashboard() {
       <div className="max-w-8xl mx-auto">
         {/* Hero Header */}
         <header className="mb-12 animate-fade-in">
-          <div className="glass rounded-3xl p-8 md:p-12 relative overflow-hidden">
+          <div className="glass rounded-3xl p-8 md:p-12 relative overflow-hidden border-4 border-primary-200/50">
             {/* Background pattern */}
-            <div className="absolute inset-0 opacity-5">
+            <div className="absolute inset-0 opacity-10">
               <div className="absolute inset-0" style={{
-                backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23667eea' fill-opacity='0.3'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`
+                backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%230066cc' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`
               }} />
             </div>
             
-            <div className="relative z-10 flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6">
-              <div className="space-y-4">
-                <div className="flex items-center gap-3 mb-2">
-                  <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-primary-500 to-accent-500 flex items-center justify-center shadow-lg">
-                    <Brain className="w-6 h-6 text-white" />
+            {/* Floating decorative elements */}
+            <div className="absolute top-4 right-4 w-16 h-16 bg-gradient-to-br from-accent-400 to-success-400 rounded-full opacity-20 animate-pulse" />
+            <div className="absolute bottom-4 left-4 w-12 h-12 bg-gradient-to-br from-primary-400 to-accent-400 rounded-full opacity-20 animate-pulse" style={{ animationDelay: '1s' }} />
+            
+            <div className="relative z-10 flex flex-col lg:flex-row justify-between items-start lg:items-center gap-8">
+              <div className="space-y-6">
+                <div className="flex items-center gap-4 mb-2">
+                  <div className="w-16 h-16 rounded-3xl bg-gradient-to-br from-primary-500 via-accent-500 to-success-500 flex items-center justify-center shadow-xl">
+                    <Brain className="w-8 h-8 text-white" />
                   </div>
-                  <div className="w-2 h-2 bg-success-500 rounded-full animate-pulse status-online" />
+                  <div className="flex items-center gap-2">
+                    <div className="w-3 h-3 bg-success-500 rounded-full animate-pulse shadow-lg" />
+                    <span className="text-sm font-bold text-success-700 bg-success-100 px-3 py-1 rounded-full">
+                      システム稼働中
+                    </span>
+                  </div>
                 </div>
-                <h1 className="text-4xl lg:text-6xl font-bold leading-tight">
-                  <span className="gradient-text">RPI4 YOLO</span>
+                <h1 className="text-5xl lg:text-7xl font-black leading-tight">
+                  <span style={{
+                    background: 'var(--gradient-hero)',
+                    WebkitBackgroundClip: 'text',
+                    WebkitTextFillColor: 'transparent',
+                    backgroundClip: 'text'
+                  }}>RPI4 YOLO</span>
                   <br />
-                  <span className="text-neutral-800 dark:text-neutral-200">最適化トラッカー</span>
+                  <span className="text-neutral-800 dark:text-neutral-100 text-4xl lg:text-5xl">最適化トラッカー</span>
                 </h1>
-                <p className="text-lg text-neutral-600 dark:text-neutral-400 max-w-2xl leading-relaxed">
-                  🤖 遺伝的アルゴリズムによるラズパイ4 YOLO最適化を
+                <p className="text-xl text-neutral-700 dark:text-neutral-300 max-w-2xl leading-relaxed font-medium">
+                  <span className="inline-block bg-gradient-to-r from-primary-600 to-accent-600 text-white px-3 py-1 rounded-lg mr-2 text-sm font-bold">
+                    🤖 AI POWERED
+                  </span>
+                  遺伝的アルゴリズムによるラズパイ4 YOLO最適化を
                   <br />
                   リアルタイムで管理・可視化する次世代ダッシュボード
                 </p>
-                <div className="flex items-center gap-4 pt-2">
-                  <div className="flex items-center gap-2 text-sm text-neutral-600">
-                    <div className="w-2 h-2 bg-primary-500 rounded-full" />
-                    <span>AI駆動型</span>
+                <div className="flex flex-wrap items-center gap-4 pt-4">
+                  <div className="flex items-center gap-2 bg-primary-100 px-4 py-2 rounded-xl border-2 border-primary-200">
+                    <div className="w-3 h-3 bg-primary-500 rounded-full animate-pulse" />
+                    <span className="text-sm font-bold text-primary-800">AI駆動型</span>
                   </div>
-                  <div className="flex items-center gap-2 text-sm text-neutral-600">
-                    <div className="w-2 h-2 bg-success-500 rounded-full" />
-                    <span>リアルタイム同期</span>
+                  <div className="flex items-center gap-2 bg-success-100 px-4 py-2 rounded-xl border-2 border-success-200">
+                    <div className="w-3 h-3 bg-success-500 rounded-full animate-pulse" />
+                    <span className="text-sm font-bold text-success-800">リアルタイム同期</span>
                   </div>
-                  <div className="flex items-center gap-2 text-sm text-neutral-600">
-                    <div className="w-2 h-2 bg-accent-500 rounded-full" />
-                    <span>クロスプラットフォーム</span>
+                  <div className="flex items-center gap-2 bg-accent-100 px-4 py-2 rounded-xl border-2 border-accent-200">
+                    <div className="w-3 h-3 bg-accent-500 rounded-full animate-pulse" />
+                    <span className="text-sm font-bold text-accent-800">クロスプラットフォーム</span>
                   </div>
                 </div>
               </div>
               
-              <div className="flex flex-col items-center lg:items-end gap-4">
+              <div className="flex flex-col items-center lg:items-end gap-6">
                 <SyncStatus onAuthRequired={() => setShowAuthModal(true)} />
-                <div className="text-center lg:text-right">
-                  <div className="text-3xl font-bold gradient-text">{Math.round(overallProgress)}%</div>
-                  <div className="text-sm text-neutral-600">総合進捗</div>
+                <div className="text-center lg:text-right bg-white/90 p-6 rounded-2xl border-2 border-primary-200 shadow-xl">
+                  <div className="text-4xl font-black mb-2" style={{
+                    background: 'var(--gradient-primary)',
+                    WebkitBackgroundClip: 'text',
+                    WebkitTextFillColor: 'transparent',
+                    backgroundClip: 'text'
+                  }}>
+                    {Math.round(overallProgress)}%
+                  </div>
+                  <div className="text-sm font-bold text-primary-700">総合進捗</div>
+                  <div className="progress-bar mt-2">
+                    <div 
+                      className="progress-fill"
+                      style={{ width: `${overallProgress}%` }}
+                    />
+                  </div>
                 </div>
               </div>
             </div>
@@ -179,71 +209,97 @@ export default function Dashboard() {
 
         {/* Stats Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12 animate-slide-up">
-          <div className="card group hover:scale-105 transition-all duration-300">
-            <div className="flex items-start justify-between">
-              <div className="space-y-2">
-                <div className="flex items-center gap-2">
-                  <Target className="w-5 h-5 text-primary-600" />
-                  <p className="text-sm font-medium text-neutral-600">全体進捗</p>
+          <div className="relative group">
+            <div className="absolute -inset-1 bg-gradient-to-r from-primary-500 to-accent-500 rounded-3xl opacity-20 group-hover:opacity-40 transition-opacity duration-300 blur"></div>
+            <div className="relative card border-4 border-primary-300 bg-gradient-to-br from-white via-primary-50 to-accent-50">
+              <div className="flex items-start justify-between">
+                <div className="space-y-3">
+                  <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-primary-500 to-accent-500 flex items-center justify-center">
+                      <Target className="w-5 h-5 text-white" />
+                    </div>
+                    <p className="text-sm font-bold text-primary-800">全体進捗</p>
+                  </div>
+                  <p className="text-4xl font-black text-primary-700">{Math.round(overallProgress)}%</p>
+                  <div className="progress-bar w-32 h-3 bg-primary-100 border-2 border-primary-300">
+                    <div 
+                      className="h-full bg-gradient-to-r from-primary-500 to-accent-500 rounded-full transition-all duration-1000"
+                      style={{ width: `${overallProgress}%` }}
+                    />
+                  </div>
                 </div>
-                <p className="text-3xl font-bold gradient-text">{Math.round(overallProgress)}%</p>
-                <div className="progress-bar w-24 h-2">
-                  <div 
-                    className="progress-fill h-full"
-                    style={{ width: `${overallProgress}%` }}
-                  />
+                <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary-400 to-accent-400 flex items-center justify-center shadow-xl group-hover:scale-110 transition-transform duration-300">
+                  <TrendingUp className="w-8 h-8 text-white" />
                 </div>
-              </div>
-              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary-100 to-primary-200 flex items-center justify-center group-hover:from-primary-200 group-hover:to-primary-300 transition-all duration-300">
-                <TrendingUp className="w-6 h-6 text-primary-700" />
               </div>
             </div>
           </div>
           
-          <div className="card group hover:scale-105 transition-all duration-300">
-            <div className="flex items-start justify-between">
-              <div className="space-y-2">
-                <div className="flex items-center gap-2">
-                  <Calendar className="w-5 h-5 text-success-600" />
-                  <p className="text-sm font-medium text-neutral-600">完了タスク</p>
+          <div className="relative group">
+            <div className="absolute -inset-1 bg-gradient-to-r from-success-500 to-success-600 rounded-3xl opacity-20 group-hover:opacity-40 transition-opacity duration-300 blur"></div>
+            <div className="relative card border-4 border-success-300 bg-gradient-to-br from-white via-success-50 to-success-100">
+              <div className="flex items-start justify-between">
+                <div className="space-y-3">
+                  <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-success-500 to-success-600 flex items-center justify-center">
+                      <Calendar className="w-5 h-5 text-white" />
+                    </div>
+                    <p className="text-sm font-bold text-success-800">完了タスク</p>
+                  </div>
+                  <p className="text-4xl font-black text-success-700">{completedTasks}<span className="text-xl text-success-500">/{totalTasks}</span></p>
+                  <p className="text-sm font-bold text-success-600 bg-success-200 px-3 py-1 rounded-full">
+                    {totalTasks > 0 ? Math.round((completedTasks / totalTasks) * 100) : 0}% 達成済み
+                  </p>
                 </div>
-                <p className="text-3xl font-bold text-success-700">{completedTasks}<span className="text-lg text-neutral-500">/{totalTasks}</span></p>
-                <p className="text-xs text-neutral-500">{totalTasks > 0 ? Math.round((completedTasks / totalTasks) * 100) : 0}% 達成済み</p>
-              </div>
-              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-success-100 to-success-200 flex items-center justify-center group-hover:from-success-200 group-hover:to-success-300 transition-all duration-300">
-                <Activity className="w-6 h-6 text-success-700" />
+                <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-success-400 to-success-500 flex items-center justify-center shadow-xl group-hover:scale-110 transition-transform duration-300">
+                  <Activity className="w-8 h-8 text-white" />
+                </div>
               </div>
             </div>
           </div>
           
-          <div className="card group hover:scale-105 transition-all duration-300">
-            <div className="flex items-start justify-between">
-              <div className="space-y-2">
-                <div className="flex items-center gap-2">
-                  <Zap className="w-5 h-5 text-accent-600" />
-                  <p className="text-sm font-medium text-neutral-600">現在フェーズ</p>
+          <div className="relative group">
+            <div className="absolute -inset-1 bg-gradient-to-r from-accent-500 to-accent-600 rounded-3xl opacity-20 group-hover:opacity-40 transition-opacity duration-300 blur"></div>
+            <div className="relative card border-4 border-accent-300 bg-gradient-to-br from-white via-accent-50 to-accent-100">
+              <div className="flex items-start justify-between">
+                <div className="space-y-3">
+                  <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-accent-500 to-accent-600 flex items-center justify-center">
+                      <Zap className="w-5 h-5 text-white" />
+                    </div>
+                    <p className="text-sm font-bold text-accent-800">現在フェーズ</p>
+                  </div>
+                  <p className="text-lg font-black text-accent-700 leading-tight">{currentPhase}</p>
+                  <p className="text-sm font-bold text-accent-600 bg-accent-200 px-3 py-1 rounded-full">
+                    🔥 アクティブ
+                  </p>
                 </div>
-                <p className="text-lg font-semibold text-accent-700 leading-tight">{currentPhase}</p>
-                <p className="text-xs text-neutral-500">アクティブ</p>
-              </div>
-              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-accent-100 to-accent-200 flex items-center justify-center group-hover:from-accent-200 group-hover:to-accent-300 transition-all duration-300">
-                <Sparkles className="w-6 h-6 text-accent-700" />
+                <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-accent-400 to-accent-500 flex items-center justify-center shadow-xl group-hover:scale-110 transition-transform duration-300">
+                  <Sparkles className="w-8 h-8 text-white" />
+                </div>
               </div>
             </div>
           </div>
           
-          <div className="card group hover:scale-105 transition-all duration-300">
-            <div className="flex items-start justify-between">
-              <div className="space-y-2">
-                <div className="flex items-center gap-2">
-                  <Brain className="w-5 h-5 text-warning-600" />
-                  <p className="text-sm font-medium text-neutral-600">実験数</p>
+          <div className="relative group">
+            <div className="absolute -inset-1 bg-gradient-to-r from-warning-500 to-warning-600 rounded-3xl opacity-20 group-hover:opacity-40 transition-opacity duration-300 blur"></div>
+            <div className="relative card border-4 border-warning-300 bg-gradient-to-br from-white via-warning-50 to-warning-100">
+              <div className="flex items-start justify-between">
+                <div className="space-y-3">
+                  <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-warning-500 to-warning-600 flex items-center justify-center">
+                      <Brain className="w-5 h-5 text-white" />
+                    </div>
+                    <p className="text-sm font-bold text-warning-800">実験数</p>
+                  </div>
+                  <p className="text-4xl font-black text-warning-700">{experiments.length}</p>
+                  <p className="text-sm font-bold text-warning-600 bg-warning-200 px-3 py-1 rounded-full">
+                    📊 記録済み実験
+                  </p>
                 </div>
-                <p className="text-3xl font-bold text-warning-700">{experiments.length}</p>
-                <p className="text-xs text-neutral-500">記録済み実験</p>
-              </div>
-              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-warning-100 to-warning-200 flex items-center justify-center group-hover:from-warning-200 group-hover:to-warning-300 transition-all duration-300">
-                <BarChart3 className="w-6 h-6 text-warning-700" />
+                <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-warning-400 to-warning-500 flex items-center justify-center shadow-xl group-hover:scale-110 transition-transform duration-300">
+                  <BarChart3 className="w-8 h-8 text-white" />
+                </div>
               </div>
             </div>
           </div>
